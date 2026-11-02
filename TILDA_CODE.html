@@ -1,0 +1,560 @@
+<!-- VADIM DOC: вставьте этот код в Tilda → блок T123 (HTML) -->
+<!-- 1) Разместите папку assets на публичном хостинге.
+     2) Внизу кода замените ASSET_BASE на URL этой папки.
+     3) Замените WEBINAR_URL на ссылку регистрации. -->
+<style>
+
+:root{
+ --vd-paper:#fbf7f1;--vd-paper2:#f4ece4;--vd-white:#fff;--vd-ink:#303234;--vd-muted:#6e7274;
+ --vd-slate:#808689;--vd-slate-dark:#565c60;--vd-orange:#ff7448;--vd-orange-dark:#e75b32;
+ --vd-peach:#ffe5d8;--vd-line:#e7ddd4;--vd-red:#c4483f;--vd-blue:#54a9cf;
+ --vd-shadow:0 18px 44px rgba(47,49,51,.10);--vd-radius:28px;
+}
+#vdLanding,#vdLanding *,.vd-sticky,.vd-sticky *,.vd-modal,.vd-modal *,.vd-popup-back,.vd-popup-back *{box-sizing:border-box}
+#vdLanding a,.vd-sticky a,.vd-popup-back a{color:inherit}
+#vdLanding{max-width:780px;margin:0 auto;background:var(--vd-paper);min-height:100vh;overflow:hidden}
+.vd-wrap{padding:0 22px}
+.vd-section{padding:50px 0}
+.vd-section.vd-white{background:#fff}
+.vd-section.vd-peach{background:#fff0e8}
+.vd-section.vd-slate{background:var(--vd-slate);color:#fff}
+.vd-section.vd-orange{background:var(--vd-orange);color:#fff}
+.vd-eyebrow{font-size:12px;letter-spacing:.20em;text-transform:uppercase;font-weight:900;color:var(--vd-orange-dark);margin-bottom:14px}
+.vd-serif{font-family:Georgia,"Times New Roman",serif}
+.vd-h1,.vd-h2,.vd-h3{margin:0 0 16px}
+.vd-h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,11vw,76px);line-height:.98;font-weight:500;letter-spacing:-.035em}
+.vd-h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(31px,8vw,52px);line-height:1.05;font-weight:500;letter-spacing:-.025em}
+.vd-h3{font-size:22px;line-height:1.22}
+.vd-p{margin:0 0 16px}
+.vd-center{text-align:center}
+.vd-small{font-size:14px;color:var(--vd-muted)}
+.vd-muted{color:var(--vd-muted)}
+.vd-accent{color:var(--vd-orange-dark)}
+.vd-hero{padding:48px 0 40px;background:linear-gradient(180deg,#858b8e 0,#747a7d 100%);color:#fff}
+.vd-hero .vd-eyebrow{color:#ffd1bf}
+.vd-hero .vd-h1 em{color:#ff9a78;font-style:italic}
+.vd-hero-copy{font-size:19px;color:#f6f7f7;max-width:650px}
+.vd-card{background:#fff;border-radius:var(--vd-radius);padding:24px;box-shadow:var(--vd-shadow);border:1px solid #eee6df}
+.vd-card+.vd-card{margin-top:14px}
+.vd-soft{background:#f6f1ec;box-shadow:none}
+.vd-dark-card{background:#50565a;color:#fff;border:0}
+.vd-recognition{display:flex;gap:14px;align-items:flex-start}
+.vd-num{flex:0 0 42px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--vd-orange);color:#fff;font-weight:900}
+.vd-recognition p{margin:2px 0 0}
+.vd-hero-grid{display:grid;gap:12px;margin-top:26px}
+.vd-video-shell{background:#2d3032;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.20)}
+.vd-video-frame{position:relative;background:#111;aspect-ratio:9/16;max-height:72vh;margin:auto}
+.vd-video-frame video{width:100%;height:100%;display:block;object-fit:contain;background:#111}
+.vd-big-play{position:absolute;inset:0;display:grid;place-items:center;border:0;background:linear-gradient(#00000010,#00000055);color:#fff;cursor:pointer}
+.vd-big-play span{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:var(--vd-orange);font-size:34px;box-shadow:0 10px 28px #0006}
+.vd-big-play.vd-hidden{display:none}
+.vd-player-controls{background:#fff3eb;color:var(--vd-ink);padding:18px 16px 16px}
+.vd-control-row{display:flex;align-items:center;gap:12px}
+.vd-play-btn,.vd-rewind-btn{border:0;background:var(--vd-peach);color:var(--vd-orange-dark);border-radius:50%;width:52px;height:52px;font-size:20px;font-weight:900;flex:0 0 auto;cursor:pointer}
+.vd-track{height:9px;flex:1;background:#f3d6c7;border-radius:999px;overflow:hidden}
+.vd-fill{height:100%;width:0;background:var(--vd-orange);border-radius:inherit;transition:width .2s linear}
+.vd-fake-time{font:600 20px/1 monospace;min-width:50px;text-align:center}
+.vd-speeds{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.vd-speed{border:0;background:transparent;padding:10px 14px;border-radius:14px;font-size:16px;color:#554f4a;cursor:pointer}
+.vd-speed.vd-active{background:var(--vd-orange);color:#fff}
+.vd-unlock-note{margin-top:16px;text-align:center;background:#fff;border:1px dashed #efb69f;border-radius:18px;padding:14px;color:#655c56}
+.vd-unlock-note b{color:var(--vd-orange-dark)}
+.vd-reveal{display:none}
+.vd-reveal.vd-visible{display:block;animation:vdRise .6s ease both}
+@keyframes vdRise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.vd-download-card{background:linear-gradient(135deg,#fff,#fff4ee);border:2px solid #ffb497}
+.vd-btn{display:flex;align-items:center;justify-content:center;min-height:62px;padding:16px 20px;border-radius:18px;text-decoration:none;text-align:center;font-weight:900;font-size:18px;background:var(--vd-orange);color:#fff;box-shadow:0 12px 28px rgba(233,90,45,.22);border:0;cursor:pointer}
+.vd-btn:hover{background:var(--vd-orange-dark)}
+.vd-btn.vd-secondary{background:#fff;color:var(--vd-orange-dark);border:2px solid var(--vd-orange);box-shadow:none}
+.vd-btn.vd-dark{background:#363a3d}
+.vd-btn.vd-full{width:100%}
+.vd-question{border-left:4px solid var(--vd-orange);padding-left:16px}
+.vd-question h3{margin:0 0 8px}
+.vd-grid{display:grid;gap:14px}
+.vd-flow{display:grid;gap:10px;margin-top:24px}
+.vd-flow-step{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #eee2da;border-radius:18px;padding:14px 16px;color:var(--vd-ink)}
+.vd-flow-step .vd-dot{width:34px;height:34px;display:grid;place-items:center;background:var(--vd-orange);color:#fff;border-radius:50%;font-weight:900}
+.vd-flow-arrow{text-align:center;color:#ffb094;font-size:24px;line-height:.7}
+.vd-topic{display:flex;gap:14px;align-items:flex-start}
+.vd-topic-icon{width:46px;height:46px;border-radius:15px;background:#fff0e8;display:grid;place-items:center;font-size:25px;flex:0 0 auto}
+.vd-photo-card{overflow:hidden;padding:0;background:var(--vd-slate-dark);color:#fff}
+.vd-photo-card img{display:block;width:100%;height:auto}
+.vd-photo-copy{padding:24px}
+.vd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e5ddd7;border-radius:20px;overflow:hidden;margin-top:18px}
+.vd-stat{background:#fff;padding:14px 8px;text-align:center}
+.vd-stat strong{display:block;color:var(--vd-orange-dark);font-family:Georgia,"Times New Roman",serif;font-size:27px;line-height:1.1}
+.vd-stat span{display:block;font-size:12px;color:var(--vd-muted);margin-top:5px}
+.vd-reviews-head{display:flex;justify-content:space-between;align-items:end;gap:12px}
+.vd-review-nav{display:flex;gap:8px}
+.vd-circle-btn{width:44px;height:44px;border-radius:50%;border:1px solid #dbcfc7;background:#fff;font-size:22px;color:var(--vd-orange-dark);cursor:pointer}
+.vd-reviews-window{margin-top:18px;overflow:hidden}
+.vd-reviews-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:14px;padding:2px 0 12px;-webkit-overflow-scrolling:touch;align-items:flex-start}
+.vd-reviews-track::-webkit-scrollbar{display:none}
+.vd-review-slide{min-width:100%;scroll-snap-align:start;background:#fff;border-radius:24px;padding:10px;box-shadow:var(--vd-shadow)}
+.vd-review-slide button{border:0;background:transparent;padding:0;width:100%;cursor:zoom-in}
+.vd-review-slide img{width:100%;height:auto;display:block;border-radius:16px;object-fit:contain}
+.vd-review-hint{text-align:center;color:var(--vd-muted);font-size:13px;margin-top:8px}
+.vd-quote{font-family:Georgia,"Times New Roman",serif;font-size:28px;line-height:1.15;margin:0}
+.vd-webinar-box{background:#fff;border-radius:30px;padding:26px;box-shadow:var(--vd-shadow);color:var(--vd-ink)}
+.vd-free-badge{display:inline-block;background:#e8f7ef;color:#1f7b58;padding:8px 12px;border-radius:999px;font-weight:900;font-size:13px;margin-bottom:12px}
+.vd-bullets{padding:0;margin:18px 0;list-style:none;display:grid;gap:11px}
+.vd-bullets li{position:relative;padding-left:30px}
+.vd-bullets li:before{content:"✓";position:absolute;left:0;top:0;color:var(--vd-orange-dark);font-weight:900}
+.vd-jtbd{display:grid;gap:12px}
+.vd-jtbd .vd-card{box-shadow:none;color:var(--vd-ink);background:#fff}
+.vd-jtbd .vd-card b{display:block;color:var(--vd-ink);font-size:19px;line-height:1.28;margin-bottom:8px}
+.vd-jtbd .vd-card .vd-p{color:#555b5e;margin:0;line-height:1.5}
+.vd-sticky{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));width:min(736px,calc(100% - 20px));z-index:80;background:#3d3937;color:#fff;border-radius:20px;padding:10px;box-shadow:0 14px 40px #0005;align-items:center;gap:10px}
+.vd-sticky.vd-show{display:flex}
+.vd-sticky-copy{flex:1;padding-left:8px;min-width:0}
+.vd-sticky-copy small{display:block;color:#ffd0bd;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.vd-sticky-copy b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vd-sticky .vd-btn{min-height:50px;padding:10px 14px;font-size:14px;flex:0 0 auto}
+.vd-modal{position:fixed;inset:0;background:#000d;z-index:100;display:none;overflow:auto;padding:20px 12px}
+.vd-modal.vd-open{display:block}
+.vd-modal-inner{max-width:760px;margin:0 auto;position:relative}
+.vd-modal img{width:100%;height:auto;display:block;border-radius:18px}
+.vd-modal-close{position:sticky;top:8px;float:right;margin:0 6px 8px 0;width:46px;height:46px;border-radius:50%;border:0;background:#fff;color:#333;font-size:26px;z-index:2;cursor:pointer}
+.vd-popup-back{position:fixed;inset:0;background:#0008;z-index:90;display:none;place-items:center;padding:18px}
+.vd-popup-back.vd-open{display:grid}
+.vd-popup{max-width:520px;width:100%;background:#fff;border-radius:28px;padding:26px;box-shadow:0 30px 80px #0006;position:relative}
+.vd-popup-close{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:22px;cursor:pointer}
+.vd-footer{padding:36px 22px 110px;background:#f2ebe4;color:#77706a;font-size:13px}
+@media(min-width:680px){
+ .vd-grid.vd-two{grid-template-columns:1fr 1fr}
+ .vd-hero-grid{grid-template-columns:repeat(3,1fr)}
+ .vd-review-slide{min-width:82%}
+}
+@media(max-width:430px){
+  .vd-wrap{padding:0 18px}
+ .vd-section{padding:42px 0}
+ .vd-card{padding:20px;border-radius:24px}
+ .vd-player-controls{padding:14px 12px}
+ .vd-play-btn,.vd-rewind-btn{width:48px;height:48px}
+ .vd-fake-time{font-size:18px}
+ .vd-speed{padding:9px 11px}
+ .vd-stats{grid-template-columns:1fr}
+ .vd-stat{text-align:left;padding:14px 16px}
+ .vd-stat strong,.vd-stat span{display:inline}
+ .vd-stat span{margin-left:5px}
+}
+
+</style>
+
+<div id="vdLanding">
+<section class="vd-hero">
+  <div class="vd-wrap">
+    <div class="vd-eyebrow">Бесплатный чек-лист для родителей</div>
+    <h1 class="vd-h1">Ребёнок кашляет:<br><em>сироп, ингаляция</em><br>или ничего?</h1>
+    <p class="vd-p vd-hero-copy">5 ошибок, которые родители часто совершают при кашле, и 3 вещи, которые стоит проверить до очередного сиропа или небулайзера.</p>
+    <div class="vd-hero-grid">
+      <div class="vd-card vd-dark-card"><b>🌙 Ночью кашель усилился?</b><p class="vd-p">И первая мысль — «что ему сейчас дать?»</p></div>
+      <div class="vd-card vd-dark-card"><b>🌫️ Делать ингаляцию?</b><p class="vd-p">Но непонятно, когда она действительно нужна.</p></div>
+      <div class="vd-card vd-dark-card"><b>💊 Какой сироп выбрать?</b><p class="vd-p">А подходит ли вообще сироп именно сейчас?</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="vd-section vd-white">
+  <div class="vd-wrap">
+    <div class="vd-eyebrow">Перед тем как забрать чек-лист</div>
+    <h2 class="vd-h2">Почему при кашле чаще всего не хватает не лекарства, а <span class="vd-accent">понимания следующего шага</span></h2>
+    <p class="vd-p">Посмотрите важную часть видео. После неё чек-лист автоматически откроется прямо под плеером.</p>
+
+    <div class="vd-video-shell">
+      <div class="vd-video-frame">
+        <video id="vdVsl" playsinline preload="metadata" data-asset-src="vsl.mp4" data-asset-poster="vsl-poster.jpg"></video>
+        <button class="vd-big-play" id="vdBigPlay" type="button" aria-label="Воспроизвести видео"><span>▶</span></button>
+      </div>
+      <div class="vd-player-controls">
+        <div class="vd-control-row">
+          <button class="vd-play-btn" id="vdPlayBtn" type="button" aria-label="Пауза или воспроизведение">▶</button>
+          <div class="vd-track" aria-hidden="true"><div class="vd-fill" id="vdProgressFill"></div></div>
+          <span class="vd-fake-time">3:40</span>
+          <button class="vd-rewind-btn" id="vdRewindBtn" type="button" aria-label="Назад на 10 секунд">↶</button>
+        </div>
+        <div class="vd-speeds" aria-label="Скорость воспроизведения">
+          <button class="vd-speed vd-active" data-speed="1" type="button">1×</button>
+          <button class="vd-speed" data-speed="1.5" type="button">1.5×</button>
+          <button class="vd-speed" data-speed="2" type="button">2×</button>
+          <button class="vd-speed" data-speed="2.5" type="button">2.5×</button>
+        </div>
+      </div>
+    </div>
+    <div class="vd-unlock-note" id="vdUnlockNote">🔒 Чек-лист и продолжение страницы откроются после просмотра важной части видео.</div>
+  </div>
+</section>
+
+<div class="vd-reveal" id="vdReveal">
+  <section class="vd-section vd-peach">
+    <div class="vd-wrap">
+      <div class="vd-card vd-download-card vd-center">
+        <div class="vd-eyebrow">Готово — можно забирать</div>
+        <h2 class="vd-h2">Ваш чек-лист открыт</h2>
+        <p class="vd-p"><strong>«Ребёнок кашляет: сироп, ингаляция или ничего?»</strong></p>
+        <p class="vd-p vd-muted">5 частых ошибок + 3 простых ориентира, которые помогут не действовать наугад.</p>
+        <a class="vd-btn vd-full" data-asset-href="checklist.pdf" download>Скачать чек-лист</a>
+        <p class="vd-small" style="margin-top:12px">Сохраните PDF в телефон — чтобы он был под рукой, когда понадобится.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-white">
+    <div class="vd-wrap">
+      <div class="vd-eyebrow">Чек-лист ваш. А теперь — главное</div>
+      <h2 class="vd-h2">Вы уже понимаете, <span class="vd-accent">чего не стоит делать автоматически</span></h2>
+      <p class="vd-p">Не каждый кашель требует сиропа. Не каждый кашель требует ингаляции. Ночной кашель сам по себе ещё не означает бронхит.</p>
+      <p class="vd-p"><strong>Но после этого возникает новый вопрос:</strong></p>
+      <h3 class="vd-h3">«Хорошо. А что тогда делать именно в нашей ситуации?»</h3>
+      <div class="vd-grid" style="margin-top:20px">
+        <div class="vd-card vd-soft vd-question"><h3>Кашель усиливается ночью</h3><p class="vd-p">Это из-за носа? Горла? Или нужно смотреть на дыхание?</p></div>
+        <div class="vd-card vd-soft vd-question"><h3>Появился лающий кашель</h3><p class="vd-p">Нужна ингаляция? Можно наблюдать дома? Когда нужен врач?</p></div>
+        <div class="vd-card vd-soft vd-question"><h3>Кашель + температура</h3><p class="vd-p">Что сейчас важнее? Что делать первым и что не делать «на всякий случай»?</p></div>
+        <div class="vd-card vd-soft vd-question"><h3>Ребёнку стало тяжелее дышать</h3><p class="vd-p">Это уже не вопрос о сиропе. Нужно понимать, когда домашняя помощь заканчивается.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-slate">
+    <div class="vd-wrap">
+      <div class="vd-eyebrow" style="color:#ffd0bd">Главная проблема — не недостаток информации</div>
+      <h2 class="vd-h2">Информации много.<br><span style="color:#ffd0bd">Не хватает последовательности.</span></h2>
+      <p class="vd-p">Сегодня насморк. Ночью кашель. Потом температура. Утром ребёнок стал вялым.</p>
+      <p class="vd-p">И каждый новый симптом снова запускает поиск: что дать, нужна ли ингаляция, можно ли наблюдать дома, когда нужен врач.</p>
+      <p class="vd-p"><strong>Родителю нужен не ещё один случайный совет. Нужна логика действий.</strong></p>
+      <div class="vd-flow">
+        <div class="vd-flow-step"><span class="vd-dot">1</span><b>Сначала понять, что происходит</b></div>
+        <div class="vd-flow-arrow">↓</div>
+        <div class="vd-flow-step"><span class="vd-dot">2</span><b>Определить главную задачу сейчас</b></div>
+        <div class="vd-flow-arrow">↓</div>
+        <div class="vd-flow-step"><span class="vd-dot">3</span><b>Понять следующий шаг и границу домашних действий</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-orange" id="webinar">
+    <div class="vd-wrap">
+      <div class="vd-webinar-box">
+        <span class="vd-free-badge">УЧАСТИЕ БЕСПЛАТНО</span>
+        <div class="vd-eyebrow">Бесплатный вебинар для родителей</div>
+        <h2 class="vd-h2">«ОРВИ И ГРИПП:<br><span class="vd-accent">ПОШАГОВЫЙ ПЛАН ДЕЙСТВИЙ</span>»</h2>
+        <p class="vd-p">Не ещё одна лекция о вирусах и не список лекарств. На эфире мы разберём саму <strong>последовательность действий родителя</strong>, когда ребёнок уже заболел.</p>
+        <ul class="vd-bullets">
+          <li><strong>Первые 24 часа:</strong> с чего начинать и на что смотреть.</li>
+          <li><strong>Кашель и ингаляции:</strong> почему кашель бывает разным и когда вопрос «что дать?» поставлен неправильно.</li>
+          <li><strong>Температура:</strong> на что смотреть кроме цифры на градуснике.</li>
+          <li><strong>Опасные признаки:</strong> когда можно наблюдать дома, когда нужен врач, а когда ждать уже нельзя.</li>
+          <li><strong>Домашняя аптечка:</strong> что действительно имеет смысл иметь под рукой и зачем.</li>
+        </ul>
+        <a class="vd-btn vd-full vd-webinar-link" href="#" rel="noopener">Зарегистрироваться бесплатно</a>
+        <p class="vd-small vd-center" style="margin-top:12px">Ссылку на регистрацию можно заменить одной строкой в коде.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-white">
+    <div class="vd-wrap">
+      <div class="vd-eyebrow">Главная мысль вебинара</div>
+      <h2 class="vd-h2">Родителю не нужно <span class="vd-accent">становиться врачом</span></h2>
+      <p class="vd-p">Вам не нужно знать сотни диагнозов и помнить десятки препаратов.</p>
+      <div class="vd-card vd-soft">
+        <p class="vd-quote">«Вам нужно понимать следующий шаг: что важно сейчас, что можно сделать дома и когда уже нужна медицинская помощь».</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-peach">
+    <div class="vd-wrap">
+      <div class="vd-eyebrow">Кто проводит вебинар</div>
+      <div class="vd-card vd-photo-card">
+        <img data-asset="vadim.jpg" alt="Вадим Нурисламов">
+        <div class="vd-photo-copy">
+          <h2 class="vd-h2">Вадим Нурисламов</h2>
+          <p class="vd-p">Международный тренер по первой помощи и сердечно-лёгочной реанимации. 17 лет работы на скорой медицинской помощи. Автор онлайн-школы «ОРВИ под контролем».</p>
+          <p class="vd-p">За годы работы я снова и снова видел одну ситуацию: родители хотят помочь ребёнку, но в нужный момент не понимают, <strong>что делать первым, что вторым и когда ждать уже нельзя.</strong></p>
+          <div class="vd-stats">
+            <div class="vd-stat"><strong>17 лет</strong><span>на скорой</span></div>
+            <div class="vd-stat"><strong>10 000+</strong><span>вызовов</span></div>
+            <div class="vd-stat"><strong>9 000+</strong><span>покупателей образовательных продуктов</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-white">
+    <div class="vd-wrap">
+      <div class="vd-reviews-head">
+        <div>
+          <div class="vd-eyebrow">Отзывы родителей</div>
+          <h2 class="vd-h2">«Просто, понятно и без лишней воды»</h2>
+        </div>
+        <div class="vd-review-nav">
+          <button class="vd-circle-btn" id="vdPrevReview" type="button" aria-label="Предыдущий отзыв">←</button>
+          <button class="vd-circle-btn" id="vdNextReview" type="button" aria-label="Следующий отзыв">→</button>
+        </div>
+      </div>
+      <p class="vd-p">Листайте свайпом. Каждый скриншот показан полностью — без обрезки.</p>
+      <div class="vd-reviews-window">
+        <div class="vd-reviews-track" id="vdReviewsTrack">
+          <article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-01.jpeg" alt="Отзыв родителя 1"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-02.jpeg" alt="Отзыв родителя 2"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-03.jpeg" alt="Отзыв родителя 3"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-04.jpeg" alt="Отзыв родителя 4"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-05.jpeg" alt="Отзыв родителя 5"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-06.jpeg" alt="Отзыв родителя 6"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-07.jpeg" alt="Отзыв родителя 7"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-08.jpeg" alt="Отзыв родителя 8"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-09.jpeg" alt="Отзыв родителя 9"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-10.jpeg" alt="Отзыв родителя 10"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-11.jpeg" alt="Отзыв родителя 11"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-12.jpeg" alt="Отзыв родителя 12"></button></article>
+<article class="vd-review-slide"><button class="vd-review-open" type="button" aria-label="Открыть отзыв полностью"><img loading="lazy" data-asset="reviews/review-13.jpeg" alt="Отзыв родителя 13"></button></article>
+        </div>
+      </div>
+      <div class="vd-review-hint">Нажмите на отзыв, чтобы открыть его крупнее.</div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-slate">
+    <div class="vd-wrap">
+      <div class="vd-eyebrow" style="color:#ffd0bd">Этот эфир для вас, если</div>
+      <h2 class="vd-h2">Вы узнаёте себя хотя бы в одной ситуации</h2>
+      <div class="vd-jtbd">
+        <div class="vd-card"><b>«Каждый раз не знаю, что делать первым»</b><p class="vd-p">Температура, кашель, насморк — и сразу десять разных решений.</p></div>
+        <div class="vd-card"><b>«Боюсь пропустить что-то серьёзное»</b><p class="vd-p">Хочется понимать, какие изменения действительно требуют врача или скорой.</p></div>
+        <div class="vd-card"><b>«Аптечка полная, а уверенности нет»</b><p class="vd-p">Наличие лекарств ещё не объясняет, когда и зачем их использовать.</p></div>
+        <div class="vd-card"><b>«Не хочу лечить ребёнка наугад»</b><p class="vd-p">Хочу понимать логику действий, а не просто повторять очередной совет из интернета.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-peach">
+    <div class="vd-wrap vd-center">
+      <div class="vd-eyebrow">Бесплатный эфир</div>
+      <h2 class="vd-h2">Разберите один раз <span class="vd-accent">пошаговую логику</span>, чтобы не искать ответы заново при каждом симптоме</h2>
+      <p class="vd-p">«ОРВИ И ГРИПП — ПОШАГОВЫЙ ПЛАН ДЕЙСТВИЙ»</p>
+      <a class="vd-btn vd-full vd-webinar-link" href="#" rel="noopener">Занять место бесплатно</a>
+    </div>
+  </section>
+
+  <section class="vd-section vd-white">
+    <div class="vd-wrap">
+      <div class="vd-eyebrow">Частые вопросы</div>
+      <h2 class="vd-h2">«Но ведь всё это есть в интернете?»</h2>
+      <div class="vd-card vd-soft">
+        <p class="vd-p"><strong>Да, отдельные кусочки информации есть бесплатно.</strong></p>
+        <p class="vd-p">Одна статья — про температуру. Другая — про кашель. Третья — про лекарства. Но когда ребёнок болеет, проблема не в отсутствии информации. Проблема — собрать её в понятную последовательность и понять, что относится именно к вашей ситуации.</p>
+      </div>
+      <div class="vd-card vd-soft">
+        <h3 class="vd-h3">«Я лучше спрошу у врача»</h3>
+        <p class="vd-p">И правильно. Вебинар не заменяет врача. Его задача — помочь родителю понимать границы домашних действий и не растеряться между первым симптомом и медицинской помощью.</p>
+      </div>
+      <div class="vd-card vd-soft">
+        <h3 class="vd-h3">«Мне нужен только ответ про кашель»</h3>
+        <p class="vd-p">Во время ОРВИ кашель редко существует отдельно от насморка, температуры и общего состояния ребёнка. Поэтому полезнее понять систему, чем каждый раз искать отдельный ответ на новый симптом.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vd-section vd-orange">
+    <div class="vd-wrap vd-center">
+      <div class="vd-eyebrow" style="color:#fff1e9">Следующий шаг</div>
+      <h2 class="vd-h2">Чек-лист уже у вас.<br>Теперь соберите <span style="color:#fff5ef">всю последовательность действий</span>.</h2>
+      <p class="vd-p">Бесплатный вебинар «ОРВИ И ГРИПП — ПОШАГОВЫЙ ПЛАН ДЕЙСТВИЙ»</p>
+      <a class="vd-btn vd-dark vd-full vd-webinar-link" href="#" rel="noopener">Зарегистрироваться бесплатно</a>
+    </div>
+  </section>
+
+  <footer class="vd-footer">
+    Материал и вебинар носят образовательный характер и не заменяют очную диагностику, индивидуальные назначения врача или экстренную медицинскую помощь. При тяжёлом или быстро ухудшающемся состоянии ребёнка обращайтесь за медицинской помощью.
+  </footer>
+</div>
+
+<div class="vd-sticky" id="vdSticky">
+  <div class="vd-sticky-copy"><small>Бесплатный вебинар</small><b>ОРВИ и грипп — пошаговый план</b></div>
+  <a class="vd-btn vd-webinar-link" href="#" rel="noopener">Записаться</a>
+</div>
+
+<div class="vd-modal" id="vdReviewModal" aria-hidden="true">
+  <div class="vd-modal-inner">
+    <button class="vd-modal-close" id="vdModalClose" type="button" aria-label="Закрыть">×</button>
+    <img id="vdModalImg" alt="Отзыв крупным планом">
+  </div>
+</div>
+
+<div class="vd-popup-back" id="vdPopupBack" aria-hidden="true">
+  <div class="vd-popup">
+    <button class="vd-popup-close" id="vdPopupClose" type="button" aria-label="Закрыть">×</button>
+    <div class="vd-eyebrow">Чек-лист уже у вас</div>
+    <h2 class="vd-h2">Хотите понять, что делать <span class="vd-accent">следующим шагом?</span></h2>
+    <p class="vd-p">На бесплатном вебинаре разберём первые 24 часа, кашель и ингаляции, температуру, опасные признаки и домашнюю аптечку.</p>
+    <a class="vd-btn vd-full vd-webinar-link" href="#" rel="noopener">Зарегистрироваться бесплатно</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ===== НАСТРОЙКИ =====
+  // Для Hostinger оставьте ASSET_BASE = 'assets'
+  // Для Tilda укажите публичный URL папки assets, например:
+  // const ASSET_BASE = 'https://your-domain.kz/cough-funnel/assets';
+  const ASSET_BASE = 'https://YOUR-DOMAIN.COM/PATH/assets';
+
+  // ВСТАВЬТЕ СЮДА ССЫЛКУ РЕГИСТРАЦИИ НА ВЕБИНАР.
+  // Пока ссылка не вставлена, кнопка покажет подсказку.
+  const WEBINAR_URL = 'PASTE_WEBINAR_LINK_HERE';
+
+  const UNLOCK_AT = 217; // 3:37 фактического времени видео
+  const VIDEO_KEY = 'vadimdoc_cough_vsl_unlocked_v1';
+
+  const root = document.getElementById('vdLanding');
+  const assetUrl = (name) => ASSET_BASE.replace(/\/$/,'') + '/' + name.replace(/^\//,'');
+
+  // Assets
+  root.querySelectorAll('[data-asset]').forEach(el => el.src = assetUrl(el.dataset.asset));
+  root.querySelectorAll('[data-asset-src]').forEach(el => el.src = assetUrl(el.dataset.assetSrc));
+  root.querySelectorAll('[data-asset-poster]').forEach(el => el.poster = assetUrl(el.dataset.assetPoster));
+  root.querySelectorAll('[data-asset-href]').forEach(el => el.href = assetUrl(el.dataset.assetHref));
+
+  // Webinar buttons
+  function webinarClick(e){
+    if(!WEBINAR_URL || WEBINAR_URL === 'PASTE_WEBINAR_LINK_HERE'){
+      e.preventDefault();
+      alert('Добавьте ссылку регистрации в переменную WEBINAR_URL внизу кода.');
+      return;
+    }
+  }
+  document.querySelectorAll('.vd-webinar-link').forEach(a => {
+    a.href = WEBINAR_URL === 'PASTE_WEBINAR_LINK_HERE' ? '#webinar' : WEBINAR_URL;
+    if(WEBINAR_URL !== 'PASTE_WEBINAR_LINK_HERE') a.target = '_blank';
+    a.addEventListener('click', webinarClick);
+  });
+
+  // Video
+  const video = document.getElementById('vdVsl');
+  const bigPlay = document.getElementById('vdBigPlay');
+  const playBtn = document.getElementById('vdPlayBtn');
+  const rewindBtn = document.getElementById('vdRewindBtn');
+  const progressFill = document.getElementById('vdProgressFill');
+  const unlockNote = document.getElementById('vdUnlockNote');
+  const reveal = document.getElementById('vdReveal');
+  const sticky = document.getElementById('vdSticky');
+
+  let maxWatched = 0;
+  let unlocked = localStorage.getItem(VIDEO_KEY) === '1';
+
+  function setPlayUI(){
+    const playing = !video.paused && !video.ended;
+    playBtn.textContent = playing ? '❚❚' : '▶';
+    bigPlay.classList.toggle('vd-hidden', playing || video.currentTime > 0);
+  }
+
+  async function togglePlay(){
+    if(video.paused){
+      try{ await video.play(); }catch(e){}
+    } else {
+      video.pause();
+    }
+    setPlayUI();
+  }
+
+  function doUnlock(scroll){
+    if(unlocked && reveal.classList.contains('vd-visible')) return;
+    unlocked = true;
+    localStorage.setItem(VIDEO_KEY,'1');
+    reveal.classList.add('vd-visible');
+    sticky.classList.add('vd-show');
+    unlockNote.innerHTML = '✅ Чек-лист открыт. Он уже появился под видео.';
+    if(scroll){
+      setTimeout(() => {
+        reveal.scrollIntoView({behavior:'smooth',block:'start'});
+      },250);
+    }
+  }
+
+  if(unlocked) doUnlock(false);
+
+  video.addEventListener('loadedmetadata', () => {
+    maxWatched = unlocked ? video.duration : 0;
+  });
+
+  video.addEventListener('timeupdate', () => {
+    if(!unlocked) maxWatched = Math.max(maxWatched, video.currentTime);
+    const pct = video.duration ? (video.currentTime / video.duration * 100) : 0;
+    progressFill.style.width = pct.toFixed(2) + '%';
+    if(!unlocked && video.currentTime >= UNLOCK_AT) doUnlock(true);
+    setPlayUI();
+  });
+
+  // До разблокировки нельзя перепрыгнуть вперёд за фактически просмотренный участок.
+  video.addEventListener('seeking', () => {
+    if(!unlocked && video.currentTime > maxWatched + 0.75){
+      video.currentTime = maxWatched;
+    }
+  });
+
+  video.addEventListener('ended', setPlayUI);
+  video.addEventListener('pause', setPlayUI);
+  video.addEventListener('play', setPlayUI);
+  bigPlay.addEventListener('click', togglePlay);
+  playBtn.addEventListener('click', togglePlay);
+  rewindBtn.addEventListener('click', () => {
+    video.currentTime = Math.max(0, video.currentTime - 10);
+  });
+  document.querySelectorAll('.vd-speed').forEach(btn => {
+    btn.addEventListener('click', () => {
+      video.playbackRate = Number(btn.dataset.speed);
+      document.querySelectorAll('.vd-speed').forEach(b => b.classList.remove('vd-active'));
+      btn.classList.add('vd-active');
+    });
+  });
+
+  // Reviews carousel
+  const track = document.getElementById('vdReviewsTrack');
+  function reviewStep(dir){
+    track.scrollBy({left:dir*(track.clientWidth+14),behavior:'smooth'});
+  }
+  document.getElementById('vdPrevReview').addEventListener('click',()=>reviewStep(-1));
+  document.getElementById('vdNextReview').addEventListener('click',()=>reviewStep(1));
+
+  // Full review viewer
+  const modal = document.getElementById('vdReviewModal');
+  const modalImg = document.getElementById('vdModalImg');
+  function closeModal(){
+    modal.classList.remove('vd-open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+  document.querySelectorAll('.vd-review-open').forEach(btn => {
+    btn.addEventListener('click',()=>{
+      modalImg.src = btn.querySelector('img').src;
+      modal.classList.add('vd-open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    });
+  });
+  document.getElementById('vdModalClose').addEventListener('click',closeModal);
+  modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); });
+
+  // One soft popup after user has viewed about half of the revealed content
+  const popupBack = document.getElementById('vdPopupBack');
+  const popupKey = 'vadimdoc_cough_popup_seen_v1';
+  function maybePopup(){
+    if(!unlocked || sessionStorage.getItem(popupKey)==='1') return;
+    const r = reveal.getBoundingClientRect();
+    const viewed = Math.max(0, -r.top + window.innerHeight);
+    const ratio = r.height ? viewed/r.height : 0;
+    if(ratio > .48){
+      sessionStorage.setItem(popupKey,'1');
+      popupBack.classList.add('vd-open');
+      popupBack.setAttribute('aria-hidden','false');
+    }
+  }
+  window.addEventListener('scroll',maybePopup,{passive:true});
+  document.getElementById('vdPopupClose').addEventListener('click',()=>popupBack.classList.remove('vd-open'));
+  popupBack.addEventListener('click',(e)=>{if(e.target===popupBack) popupBack.classList.remove('vd-open')});
+
+})();
+</script>
+
